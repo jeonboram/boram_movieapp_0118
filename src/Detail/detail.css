@@ -1,0 +1,50 @@
+body, ul, li, p, h1, h2, h3, h4, h5, h6 {
+  padding: 0;
+  margin: 0;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+body {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  background-color:#d0cccd;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.DetailSection {
+  position: relative;
+}
+.DetailSection > img, .DetailSection > span {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+}
+.DetailSection > span {
+  background-color: rgba(255,255,255,0.5);
+}
+.DetailSection .content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 80%;
+  height: 100%;
+  margin: 10% 15%;
+}
+.DetailSection .content > img {
+  display: block;
+  width: 30%;
+}

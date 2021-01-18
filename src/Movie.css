@@ -1,0 +1,41 @@
+.movie {
+  position: relative;
+  /* height: 340px; */
+  color: white;
+}
+
+.movie img {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
+.movie .cover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transition: background-color 0.3s;
+}
+
+.movie:hover .cover, .movie:focus .cover {
+  background-color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+.movie:hover .movie_data .movie_title, .movie:hover .movie_data .movie_rating, .movie:focus .movie_data .movie_title, .movie:focus .movie_data .movie_rating {
+  display: block;
+}
+
+.movie .movie_data {
+  position: absolute;
+  left: 5%;
+  bottom: 5%;
+}
+.movie .movie_data .movie_title, .movie .movie_data .movie_rating {
+  display: none;
+  transition: display 0.4s;
+}
+.movie .movie_data .movie_title {
+  margin-bottom: 5px;
+}
