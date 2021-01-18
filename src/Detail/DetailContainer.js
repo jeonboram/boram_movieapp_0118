@@ -1,5 +1,5 @@
 import React from "react";
-import { movieApi } from "api";
+import api from "api";
 import DetailPresenter from "./DetailPresenter";
 
 
@@ -21,12 +21,12 @@ export default class extends React.Component {
     console.log(id, push);
     const { isUpcoming } = this.state;
     console.log(isUpcoming);
-    let results = this.staste;
+    let results = null;
     try {
       if(!isUpcoming) {
-        ({ data: results } = await movieApi.movieDetail(id));
+        ({ data: results } = await api.get(`movie/${id}?api_key=0d32823bbea4b0889cdd7c4bce3b1dbc&language=en-US`));
       } else {
-        ({ data: results } = await movieApi.movieDetail(id));
+        ({ data: results } = await api.get(`movie/${id}?api_key=0d32823bbea4b0889cdd7c4bce3b1dbc&language=en-US`));
       }
     } catch {
       this.setState({ error: "Can't find Movie information"})

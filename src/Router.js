@@ -12,7 +12,6 @@ export default () => (
         <Route path="/" exact component = { Home } />
         <Route path="/upcoming" component = { Upcoming } />
         <Route path="/:id" component = { Detail } />
-        <Route path="/upcoming/:id" component = { Detail } />
       </Switch>
     </Suspense>
     </>

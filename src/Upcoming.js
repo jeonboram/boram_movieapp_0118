@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
-import Movie from "./Movie";
-import Header from "./Header";
+import Movie from "./Movie/Movie";
+import Header from "./Header/Header";
 import "./Home/Home.css";
 
 

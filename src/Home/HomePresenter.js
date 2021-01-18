@@ -1,31 +1,38 @@
 import React, { Suspense } from "react";
 import PropTypes from "prop-types";
-import Header from "../Header";
-import Movie from "../Movie";
+import Header from "../Header/Header";
+import Movie from "../Movie/Movie";
+import Slide from "../Slide/Slide";
+import "../default.css";
 import "./Home.css";
 
-const HomePresenter = ({ isLoading, movies, movies2, movies3, movies4, movies5, moviesTotal, show, error }) => (
+const HomePresenter = ({ isLoading, movies, forSlider, error }) => (
   <section className="container">
     <>
     <Header />
     { isLoading 
       ? ( <div className="loader"><span className="loader_text">"Loading..." </span></div>
-      ) : (              
+      ) : (   
+          <>    
           <div className="movies">
+            <Slide
+              forSlider={forSlider}
+            />                   
             <h3>Popular Movie</h3>
             <div className="movieBox">
-              {show.map(show => (
+              {movies.map(movie => (
                 <Movie
-                  key={show.id}
-                  id={show.id}
-                  year={show.release_date && show.release_date.substring(0, 4)}
-                  title={show.original_title}
-                  poster={show.poster_path}
-                  rating={show.vote_average}
+                  key={movie.id}
+                  id={movie.id}
+                  year={movie.release_date && movie.release_date.substring(0, 4)}
+                  title={movie.original_title}
+                  poster={movie.poster_path}
+                  rating={movie.vote_average}
                 />
               ))}
             </div>
           </div>
+          </>
         ) 
     }
     </>

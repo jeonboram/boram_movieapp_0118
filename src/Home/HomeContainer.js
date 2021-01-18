@@ -1,4 +1,76 @@
 import React from "react";
+import  api  from "api";
+import HomePresenter from "./HomePresenter";
+import "./Home.css";
+
+export default class extends React.Component {
+  state = {
+    isLoading: true,
+    movies: [],
+    items: 20,
+    preItems: 0,
+    forSlider: [],
+    error: null,
+    page: 1,
+  };
+
+  getMovies = async () => {
+    try {
+      let page = this.state.page;
+      const { data: { results : movies }} = await api.get(`movie/popular?api_key=0d32823bbea4b0889cdd7c4bce3b1dbc&language=en-US&page=${page}`);
+      console.log( movies );
+
+      let movieRandom = [];
+      for(var i = 0; i < 10; i++) {
+        let Random = movies[Math.floor(Math.random() * movies.length)];
+        movieRandom.push(Random);
+      }
+
+      this.setState({ movies: [...this.state.movies, ...movies], forSlider: movieRandom, isLoading: false });
+      window.addEventListener('scroll', this.infiniteScroll, true);
+    } catch {
+      this.setState({ error: "Can't find Movie information"})
+    } finally {
+      this.setState({ isLoading: false })
+    }
+  }
+    
+  componentDidMount() {
+    this.getMovies();
+  }
+
+  infiniteScroll = () => {
+    let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+    let scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+    let clientHeight = document.documentElement.clientHeight;
+    
+    if(scrollTop + clientHeight >= scrollHeight ) {
+      this.setState({
+        preItems: this.state.items,
+        items: this.state.items + 20,
+        page: this.state.page + 1
+      })
+      this.componentDidMount();
+    }
+  }
+
+  render() {
+    const { isLoading, movies, forSlider, error } = this.state;
+    console.log( movies );
+    return (
+      <HomePresenter 
+        movies={movies}
+        forSlider={forSlider}
+        isLoading={isLoading}
+        error={error}
+      />
+    );
+  };
+};
+
+
+/*
+import React from "react";
 import { movieApi } from "api";
 import HomePresenter from "./HomePresenter";
 import "./Home.css";
@@ -15,6 +87,7 @@ export default class extends React.Component {
     items: 20,
     preItems: 0,
     show: [],
+    forSlider: [],
     error: null
   };
 
@@ -27,7 +100,16 @@ export default class extends React.Component {
       const { data: { results : movies5 }} = await movieApi.movie5();
       const moviesTotal = Array.of( ...movies, ...movies2, ...movies3, ...movies4, ...movies5 );
       const result = moviesTotal.slice(this.state.preItems, this.state.items);
-      this.setState({ movies, movies2, movies3, movies4, movies5, moviesTotal, show: [...this.state.show, ...result], isLoading: false });
+      
+      console.log(moviesTotal);
+      let movieRandom = [];
+      for(var i = 0; i < 10; i++) {
+        let Random = moviesTotal[Math.floor(Math.random() * moviesTotal.length)];
+        movieRandom.push(Random);
+      }
+      console.log(movieRandom);
+
+      this.setState({ movies, movies2, movies3, movies4, movies5, moviesTotal, show: [...this.state.show, ...result], forSlider:movieRandom, isLoading: false });
       window.addEventListener('scroll', this.infiniteScroll, true);
     } catch {
       this.setState({ error: "Can't find Movie information"})
@@ -55,7 +137,7 @@ export default class extends React.Component {
   }
 
   render() {
-    const { isLoading, movies, movies2, movies3, movies4, movies5, moviesTotal, show, error } = this.state;
+    const { isLoading, movies, movies2, movies3, movies4, movies5, moviesTotal, show, forSlider, error } = this.state;
     return (
       <HomePresenter 
         movies={movies}
@@ -65,9 +147,11 @@ export default class extends React.Component {
         movies5={movies5}
         moviesTotal={moviesTotal}
         show={show}
+        forSlider={forSlider}
         isLoading={isLoading}
         error={error}
       />
     );
   };
 };
+*/
